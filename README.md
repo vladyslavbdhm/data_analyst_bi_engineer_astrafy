@@ -65,24 +65,33 @@ dbt test
 Astrafy_challenge_Vladyslav_Dodonov/
 │
 ├── analysis/
+│   ├── ex1_orders_2023.sql
+│   ├── ex2_orders_per_month_2023.sql
+│   ├── ex3_avg_products_per_order_per_month_2023.sql
 │   └── forecast/
-│       ├── ex1_orders_2023.sql
-│       ├── ex2_orders_per_month_2023.sql
-│       ├── ex3_avg_products_per_order_per_month_2023.sql
+│       ├── 01_daily_kpis.sql
+│       ├── 02_models_train.sql
+│       ├── 03_forecast_28d.sql
+│       └── 04_view_dashboard_forecast.sql
 │
 ├── dashboard_looker_studio/
-│   └── Marketing_Report_-_Sales_2022_23_(Astrafy).pdf   # Final Looker Studio dashboard (exported)
+│   └── Marketing_Report_-_Sales_2022_23_(Astrafy).pdf   # Exported Looker Studio dashboard
 │
 ├── looker/
 │   ├── astrafy_challenge.model.lkml                     # LookML model definition
-│   └── orders_2023_analysis.view.lkml                   # View with metrics, parameters, and PoP logic
+│   └── orders_2023_analysis.view.lkml                   # View with metrics, parameters, PoP logic
 │
 ├── models/
 │   ├── marts/
 │   │   ├── ex4_fct_orders_enriched.sql
 │   │   ├── ex5_fct_orders_segmentation_2023.sql
 │   │   ├── ex6_fct_orders_2023_with_segmentation.sql
-│   │   └── schema.yml
+│   │   ├── schema.yml
+│   │   └── kpis/
+│   │       ├── ex1_orders_2023_count.sql
+│   │       ├── ex2_orders_2023_by_month.sql
+│   │       └── ex3_avg_products_per_order_2023_by_month.sql      
+│   │ 
 │   ├── staging/
 │   │   ├── stg_orders.sql
 │   │   ├── stg_sales.sql
@@ -93,17 +102,9 @@ Astrafy_challenge_Vladyslav_Dodonov/
 │   ├── sales_recrutement.csv
 │   └── schema.yml
 │
-├── analytics/
-│   └── bqml_forecast/
-│       ├── 01_daily_kpis.sql
-│       ├── 02_models_train.sql
-│       ├── 03_forecast_28d.sql
-│       └── 04_view_dashboard_forecast.sql
-│
 ├── README.md
-├── requirements.txt
 ├── dbt_project.yml
-├── profiles.yml
+├── requirements.txt
 └── .gitignore
 ```
 

@@ -1,0 +1,40 @@
+version: 2
+
+seeds:
+  - name: orders_recrutement
+    description: >
+      Raw orders file provided by the company (Excel converted to CSV).
+      One row per order.
+    columns:
+      - name: date_date
+        description: "Order date."
+      - name: customers_id
+        description: "Customer identifier from the source."
+      - name: orders_id
+        description: "Order identifier from the source."
+        tests: [not_null]
+      - name: net_sales
+        description: "Order-level net sales from the source file (may be line-level in some sources)."
+
+  - name: sales_recrutement
+    description: >
+      Raw sales line items (Excel converted to CSV).
+      One row per product line within an order.
+    columns:
+      - name: date_date
+        description: "Sales line date."
+      - name: customer_id
+        description: "Customer identifier for the sales line."
+      - name: order_id
+        description: "Order identifier for the sales line."
+        tests: [not_null]
+      - name: products_id
+        description: "Product identifier."
+        tests: [not_null]
+      - name: net_sales
+        description: "Net sales amount for the line (as provided by the source file)."
+        tests: [not_null]
+      - name: qty
+        description: "Quantity sold on this line."
+        tests: [not_null]
+

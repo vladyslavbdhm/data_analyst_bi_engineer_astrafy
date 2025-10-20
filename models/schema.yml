@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: >
+      Staging table for raw orders. One row per order.
+    columns:
+      - name: order_id
+        description: "Order identifier."
+        tests: [not_null]
+      - name: client_id
+        description: "Customer identifier."
+        tests: [not_null]
+      - name: order_date
+        description: "Order date."
+        tests: [not_null]
+
+  - name: stg_sales
+    description: >
+      Staging table for sales line items. One row per product line within an order.
+    columns:
+      - name: order_id
+        description: "Order identifier to which this line item belongs."
+        tests: [not_null]
+      - name: product_id
+        description: "Product identifier for the line item."
+        tests: [not_null]
+      - name: quantity
+        description: "Quantity purchased on this line."
+        tests: [not_null]
+      - name: net_sales
+        description: "Net sales amount for the line (numeric)."
+        tests: [not_null]
+      - name: price
+        description: "Unit price (net_sales / quantity) when quantity > 0; may be NULL otherwise."

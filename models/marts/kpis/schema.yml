@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: ex1_orders_2023_count
+    description: "Exercise 1 — Single-row KPI with the total number of distinct orders in 2023."
+    columns:
+      - name: year
+        description: "Reference year (fixed value 2023)."
+        tests: [not_null]
+      - name: orders_2023_count
+        description: "Total number of distinct orders placed during 2023."
+        tests: [not_null]
+
+  - name: ex2_orders_2023_by_month
+    description: "Exercise 2 — Number of distinct orders per month in 2023."
+    columns:
+      - name: month
+        description: "Month bucket (first day of the month)."
+        tests: [not_null, unique]
+      - name: orders_count
+        description: "Number of distinct orders in the month."
+        tests: [not_null]
+
+  - name: ex3_avg_products_per_order_2023_by_month
+    description: "Exercise 3 — Average number of products per order by month in 2023."
+    columns:
+      - name: month
+        description: "Month bucket (first day of the month)."
+        tests: [not_null, unique]
+      - name: avg_products_per_order
+        description: "Average over orders in month of the total products per order."
+        tests: [not_null]

@@ -1,0 +1,21 @@
+# --- Python / environment ---
+.venv/
+__pycache__/
+
+# --- OS / IDE ---
+.vscode/
+
+# --- dbt ---
+target/
+logs/
+dbt_packages/
+dbt_internal_packages/
+
+# --- Local config / credentials ---
+.env
+.env.*
+profiles.yml
+.user.yml
+
+# --- Personal Docs ---
+PROBLEMS.md

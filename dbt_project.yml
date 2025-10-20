@@ -1,0 +1,32 @@
+name: 'astrafy_challenge'
+version: '1.0.0'
+config-version: 2
+
+profile: 'astrafy_challenge'
+
+model-paths: ['models']
+seed-paths: ['seeds']
+test-paths: ['tests']
+snapshot-paths: ['snapshots']
+analysis-paths: ['analysis']
+macro-paths: ['macros']
+docs-paths: ['docs']
+
+models:
+  astrafy_challenge:
+    +materialized: view
+    
+    staging:
+      +schema: staging
+      +materialized: view
+    
+    marts:
+      +schema: marts
+      +materialized: table 
+      kpis:
+        +schema: marts_kpis
+        +materialized: table
+    
+    analysis:
+      +schema: analysis
+      

@@ -6,13 +6,106 @@
 
 ## Overview
 
-This repository contains the full implementation of the **Astrafy Data Challenge**, covering the three main parts:
+This repository contains the full implementation of the **Astrafy Data Challenge**, covering three main parts:
 
 1. **Data Modeling (dbt)** — cleaning, transformation, and KPI computation.  
 2. **Semantic Layer (LookML)** — reusable business metrics for exploration.  
 3. **Dashboard (Looker Studio)** — interactive visualization and forecasting.  
 
-All assets were developed in **BigQuery**, **dbt**, and **Looker Studio**, following analytics engineering best practices.  
+All assets were developed using **BigQuery**, **dbt**, and **Looker Studio**, following analytics engineering best practices.  
+
+---
+
+## Setup & Installation
+
+### 1. Clone the Repository
+```bash
+git clone <repository_url>
+cd Astrafy_challenge_Vladyslav_Dodonov
+```
+
+### 2. Create and Activate a Virtual Environment
+**Windows**
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+**Mac/Linux**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install Requirements
+```bash
+pip install -r requirements.txt
+```
+
+Contents of `requirements.txt`:
+```
+dbt-bigquery==1.7.16
+```
+
+### 4. Configure dbt Profile
+Ensure your `profiles.yml` includes a valid BigQuery connection pointing to your dataset.
+
+### 5. Run dbt Pipeline
+```bash
+dbt seed
+dbt run
+dbt test
+```
+
+---
+
+## Project Structure
+
+```
+Astrafy_challenge_Vladyslav_Dodonov/
+│
+├── analysis/
+│   └── forecast/
+│       ├── ex1_orders_2023.sql
+│       ├── ex2_orders_per_month_2023.sql
+│       ├── ex3_avg_products_per_order_per_month_2023.sql
+│
+├── dashboard_looker_studio/
+│   └── Marketing_Report_-_Sales_2022_23_(Astrafy).pdf   # Final Looker Studio dashboard (exported)
+│
+├── looker/
+│   ├── astrafy_challenge.model.lkml                     # LookML model definition
+│   └── orders_2023_analysis.view.lkml                   # View with metrics, parameters, and PoP logic
+│
+├── models/
+│   ├── marts/
+│   │   ├── ex4_fct_orders_enriched.sql
+│   │   ├── ex5_fct_orders_segmentation_2023.sql
+│   │   ├── ex6_fct_orders_2023_with_segmentation.sql
+│   │   └── schema.yml
+│   ├── staging/
+│   │   ├── stg_orders.sql
+│   │   ├── stg_sales.sql
+│   │   └── schema.yml
+│
+├── seeds/
+│   ├── orders_recrutement.csv
+│   ├── sales_recrutement.csv
+│   └── schema.yml
+│
+├── analytics/
+│   └── bqml_forecast/
+│       ├── 01_daily_kpis.sql
+│       ├── 02_models_train.sql
+│       ├── 03_forecast_28d.sql
+│       └── 04_view_dashboard_forecast.sql
+│
+├── README.md
+├── requirements.txt
+├── dbt_project.yml
+├── profiles.yml
+└── .gitignore
+```
 
 ---
 
@@ -20,14 +113,6 @@ All assets were developed in **BigQuery**, **dbt**, and **Looker Studio**, follo
 
 ### Goal
 Model a clean, reliable dataset to analyze orders and customers, following the exercises defined in the challenge.
-
-### Repository Structure
-```
-/models/
-  /staging/
-  /marts/
-  /schema.yml
-```
 
 ### Exercises Implemented
 
@@ -206,11 +291,5 @@ Every model includes:
 - Structured folder naming for maintainability
 - Forecast scripts organized by execution step
 
-Additional optional materials (e.g., Loom video) can be provided for walkthrough demonstration.
-
 ---
 
-## Author
-Vladyslav Dodonov  
-Master’s Data Science Candidate — 2025  
-For Astrafy Data Challenge

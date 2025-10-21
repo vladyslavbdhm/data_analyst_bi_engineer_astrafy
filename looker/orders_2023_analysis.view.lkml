@@ -22,27 +22,25 @@ view: orders_2023_analysis {
   }
 
   dimension: dynamic_order_segmentation {
-    type: string
+  type: string
   sql:
-    CASE
-      WHEN (
-        SELECT COUNT(1)
+    (
+      SELECT
+        CASE
+          WHEN cnt = 0 THEN 'New'
+          WHEN cnt BETWEEN 1 AND 3 THEN 'Returning'
+          ELSE 'VIP'
+        END
+      FROM (
+        SELECT COUNT(1) AS cnt
         FROM `enduring-honor-460514-p2.astrafy_challenge_marts.ex4_fct_orders_enriched` o2
         WHERE o2.client_id = ${TABLE}.client_id
           AND o2.order_date >= DATE_SUB(${TABLE}.order_date, INTERVAL 12 MONTH)
           AND o2.order_date < ${TABLE}.order_date
-      ) = 0 THEN 'New'
-      WHEN (
-        SELECT COUNT(1)
-        FROM `enduring-honor-460514-p2.astrafy_challenge_marts.ex4_fct_orders_enriched` o2
-        WHERE o2.client_id = ${TABLE}.client_id
-          AND o2.order_date >= DATE_SUB(${TABLE}.order_date, INTERVAL 12 MONTH)
-          AND o2.order_date < ${TABLE}.order_date
-      ) BETWEEN 1 AND 3 THEN 'Returning'
-      ELSE 'VIP'
-    END ;;
-  description: "Dynamic segmentation computed per order using last 12 months of order history (New / Returning / VIP). Uses ex4_fct_orders_enriched as history source."
-}
+      )
+    ) ;;
+  description: "Dynamic segmentation per order using prior 12 months of history (New / Returning / VIP)."
+  }
 
   dimension: order_segmentation {
     type: string

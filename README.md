@@ -191,6 +191,9 @@ dbt test
 All tests passed successfully.  
 Minor warnings related to BigQuery partition pruning are expected and documented.
 
+<img width="429" height="592" alt="image" src="https://github.com/user-attachments/assets/ca00cd0f-957e-440c-9f37-31bd4f1854b5" />
+
+
 ---
 
 ## Part 2 — Semantic Layer (LookML)

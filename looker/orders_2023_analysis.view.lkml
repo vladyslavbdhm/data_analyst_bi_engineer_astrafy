@@ -96,11 +96,11 @@ view: orders_2023_analysis {
       {% if timeframe_picker._parameter_value == 'Day' %}
         ${TABLE}.order_date
       {% elsif timeframe_picker._parameter_value == 'Week' %}
-        TIMESTAMP_TRUNC(${TABLE}.order_date, WEEK(MONDAY))
+        DATE_TRUNC(${TABLE}.order_date, WEEK(MONDAY))
       {% elsif timeframe_picker._parameter_value == 'Month' %}
-        TIMESTAMP_TRUNC(${TABLE}.order_date, MONTH)
+        DATE_TRUNC(${TABLE}.order_date, MONTH)
       {% elsif timeframe_picker._parameter_value == 'Quarter' %}
-        TIMESTAMP_TRUNC(${TABLE}.order_date, QUARTER)
+        DATE_TRUNC(${TABLE}.order_date, QUARTER)
       {% else %}
         NULL
       {% endif %} ;;

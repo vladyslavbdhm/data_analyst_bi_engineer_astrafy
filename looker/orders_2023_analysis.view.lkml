@@ -21,11 +21,34 @@ view: orders_2023_analysis {
     description: "Unique identifier of the customer placing the order."
   }
 
+  dimension: dynamic_order_segmentation {
+    type: string
+  sql:
+    CASE
+      WHEN (
+        SELECT COUNT(1)
+        FROM `enduring-honor-460514-p2.astrafy_challenge_marts.ex4_fct_orders_enriched` o2
+        WHERE o2.client_id = ${TABLE}.client_id
+          AND o2.order_date >= DATE_SUB(${TABLE}.order_date, INTERVAL 12 MONTH)
+          AND o2.order_date < ${TABLE}.order_date
+      ) = 0 THEN 'New'
+      WHEN (
+        SELECT COUNT(1)
+        FROM `enduring-honor-460514-p2.astrafy_challenge_marts.ex4_fct_orders_enriched` o2
+        WHERE o2.client_id = ${TABLE}.client_id
+          AND o2.order_date >= DATE_SUB(${TABLE}.order_date, INTERVAL 12 MONTH)
+          AND o2.order_date < ${TABLE}.order_date
+      ) BETWEEN 1 AND 3 THEN 'Returning'
+      ELSE 'VIP'
+    END ;;
+  description: "Dynamic segmentation computed per order using last 12 months of order history (New / Returning / VIP). Uses ex4_fct_orders_enriched as history source."
+}
+
   dimension: order_segmentation {
     type: string
     sql: ${TABLE}.order_segmentation ;;
     description: "Customer segment based on prior 12-month orders: New, Returning, VIP."
-  }
+  }  
 
   dimension: qty_product {
     type: number
@@ -129,21 +152,21 @@ view: orders_2023_analysis {
 
   measure: new_orders {
     type: count
-    sql: CASE WHEN ${order_segmentation} = 'New' THEN 1 ELSE NULL END ;;
+    sql: CASE WHEN ${dynamic_order_segmentation} = 'New' THEN 1 ELSE NULL END ;;
     description: "Count of orders from New customers."
     drill_fields: [detail*]
   }
 
   measure: returning_orders {
     type: count
-    sql: CASE WHEN ${order_segmentation} = 'Returning' THEN 1 ELSE NULL END ;;
+    sql: CASE WHEN ${dynamic_order_segmentation} = 'Returning' THEN 1 ELSE NULL END ;;
     description: "Count of orders from Returning customers."
     drill_fields: [detail*]
   }
 
   measure: vip_orders {
     type: count
-    sql: CASE WHEN ${order_segmentation} = 'VIP' THEN 1 ELSE NULL END ;;
+    sql: CASE WHEN ${dynamic_order_segmentation} = 'VIP' THEN 1 ELSE NULL END ;;
     description: "Count of orders from VIP customers."
     drill_fields: [detail*]
   }
@@ -192,6 +215,7 @@ view: orders_2023_analysis {
       order_id,
       client_id,
       order_segmentation,
+      dynamic_order_segmentation,
       qty_product,
       net_sales,
       order_date,
